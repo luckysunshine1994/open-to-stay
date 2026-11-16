@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open to Stay · Stories of home in Belfast</title>
+<meta name="description" content="Open to Stay is a mixed reality artwork made from conversations with people in Belfast about what makes a place feel like home. Listen to the full stories.">
+<meta property="og:title" content="Open to Stay">
+<meta property="og:description" content="What makes a place feel like home? Stories from Belfast, with Belfast City of Sanctuary.">
+<meta property="og:image" content="img/hall.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --magenta:#A30D56; --magenta-d:#7d0a42; --teal:#059FC6; --ink:#23201f; --muted:#6b6461;
+  --paper:#FBF7F2; --line:#e7dfd6; --night:#141012;
+  --serif:"Bree Serif",Georgia,serif; --sans:"Open Sans",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+a{color:var(--magenta)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.15;margin:0}
+.wrap{max-width:720px;margin:0 auto;padding:0 24px}
+
+/* number badges — so images can be referred to by number. Add ?clean to the address to hide them. */
+[data-n]{position:relative}
+[data-n]::after{content:attr(data-n);position:absolute;top:10px;left:10px;z-index:5;min-width:26px;height:26px;padding:0 7px;border-radius:13px;
+  background:rgba(255,255,255,.92);color:var(--magenta);font:600 13px/26px var(--sans);text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.25);pointer-events:none}
+.clean [data-n]::after{display:none}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:560px;overflow:hidden;background:var(--night);color:#fff}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,16,18,.55) 0%,rgba(20,16,18,0) 40%,rgba(20,16,18,.75) 100%)}
+.hero-text{position:absolute;z-index:2;left:0;right:0;bottom:12vh;text-align:center;padding:0 24px}
+.kicker{font-size:14px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 14px;opacity:.85}
+.hero h1{font-size:clamp(52px,10vw,120px);letter-spacing:-.01em}
+.hero .q{font-family:var(--serif);font-size:clamp(20px,3vw,28px);margin:12px 0 0;opacity:.95}
+.down{position:absolute;z-index:2;left:50%;bottom:28px;transform:translateX(-50%);color:#fff;text-decoration:none;font-size:26px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,8px)}}
+.hero[data-n]::after{top:auto;bottom:14px;left:14px}
+
+/* ABOUT */
+.about{padding:96px 0 80px}
+.lead{font-family:var(--serif);font-size:clamp(26px,3.4vw,34px);line-height:1.3;color:var(--magenta);margin:0 0 28px}
+.about p{margin:0 0 18px}
+blockquote{margin:44px 0 0;padding:28px 30px;background:#fff;border-left:5px solid var(--teal);border-radius:4px}
+blockquote p{font-family:var(--serif);font-size:22px;line-height:1.45;margin:0 0 12px!important}
+cite{font-style:normal;font-size:15px;color:var(--muted)}
+.stories{max-width:1040px;margin:72px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stories a{display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:var(--ink);padding:10px 6px 18px;border-radius:12px;transition:transform .3s,background .3s}
+.stories a:hover{background:#fff;transform:translateY(-4px)}
+.stories img{width:min(170px,100%);aspect-ratio:1;filter:drop-shadow(0 10px 18px rgba(60,20,40,.25))}
+.stories .n{margin-top:12px;font-size:13px;color:var(--muted);letter-spacing:.12em}
+.stories b{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--magenta)}
+.stories a span:last-child{font-size:16px}
+
+/* DOOR — two panels that slide apart as you scroll, like the doorways in the artwork */
+.door{height:230vh;position:relative;background:var(--paper)}
+.door .sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+.reveal{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.bubble{width:min(220px,40vw);aspect-ratio:1;filter:drop-shadow(0 14px 24px rgba(60,20,40,.3));transform:scale(calc(.75 + var(--p,0)*.25));opacity:calc(var(--p,0)*1.6)}
+.reveal .num{margin:22px 0 4px;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.reveal h2{font-size:clamp(48px,8vw,96px);color:var(--magenta)}
+.reveal .who{font-family:var(--serif);font-size:clamp(24px,3vw,32px);margin:6px 0 0}
+.panel{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;background:var(--night);will-change:transform;transition:transform .08s linear}
+.panel.a{left:0;transform:translateX(calc(var(--p,0) * -100%))}
+.panel.b{right:0;transform:translateX(calc(var(--p,0) * 100%))}
+.panel img,.panel video{width:100%;height:100%;object-fit:cover}
+.single .panel img{position:absolute;top:0;height:100%;width:200%;max-width:none}
+.single .half-l img{left:0}
+.single .half-r img{right:0}
+.single .panel.b::after{display:none}
+.cap{position:absolute;left:28px;bottom:28px;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.panel.b .cap{left:auto;right:28px;text-align:right}
+.cap span{display:block;font-size:14px;letter-spacing:.16em;text-transform:uppercase;opacity:.9}
+.cap b{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,52px)}
+.panel.a::before{content:"";position:absolute;top:0;bottom:0;right:0;width:2px;background:rgba(255,255,255,.55);z-index:2}
+.hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:8px 16px;border-radius:999px;background:rgba(20,16,18,.45);white-space:nowrap;color:#fff;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:calc(1 - var(--p,0)*4);z-index:3;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+
+/* STORY BODY */
+.story{max-width:1180px;margin:0 auto;padding:40px 24px 120px;display:grid;gap:56px}
+.story.two{grid-template-columns:1fr 1fr}
+.story.one{max-width:820px;grid-template-columns:minmax(0,1fr)}
+.col{min-width:0}
+.col h3{font-size:34px;color:var(--ink);margin:0 0 20px}
+.col h3 span{display:block;font-family:var(--sans);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+
+.player{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 20px 8px 8px;position:sticky;top:12px;z-index:10;box-shadow:0 6px 20px rgba(40,20,30,.08)}
+.play{flex:none;width:52px;height:52px;border-radius:50%;border:0;background:var(--magenta);cursor:pointer;display:grid;place-items:center}
+.play:hover{background:var(--magenta-d)}
+.play svg{width:24px;height:24px;fill:#fff}
+.play .i-pause,.playing .play .i-play{display:none}
+.playing .play .i-pause{display:inline}
+.pl-main{flex:1;min-width:0}
+.pl-label{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:6px;background:var(--line);border-radius:3px;margin-top:6px;cursor:pointer;position:relative}
+.bar::before{content:"";position:absolute;inset:-10px 0}
+.fill{height:100%;width:0;background:var(--teal);border-radius:3px}
+.time{flex:none;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+
+.transcript{margin:28px 0 36px}
+.tr-label{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.transcript p{margin:0;padding:8px 12px;border-radius:8px;display:flex;gap:14px;transition:background .25s}
+.transcript p.on{background:#fff;box-shadow:inset 3px 0 0 var(--magenta)}
+.ts{flex:none;border:0;background:none;padding:2px 0 0;font:600 13px/1.6 var(--sans);color:var(--teal);cursor:pointer;min-width:36px;text-align:left}
+.ts:hover{color:var(--magenta)}
+
+.figs{display:grid;gap:18px}
+.figs.row{grid-template-columns:1fr 1fr}
+figure{margin:0}
+.ph img,.ph video{width:100%;border-radius:8px;cursor:zoom-in;background:#ddd}
+.ph video{cursor:default}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+
+.gallery-wrap{position:relative;margin:28px -24px 8px}
+.gallery{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 24px 12px;scrollbar-width:thin}
+.gallery .ph{flex:none;width:min(560px,82vw);scroll-snap-align:center}
+.gallery .ph img{height:min(420px,60vw);object-fit:cover}
+.gal-btn{position:absolute;top:calc(min(420px,60vw)/2 - 24px);z-index:6;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.95);color:var(--magenta);font-size:22px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.gal-btn.prev{left:8px}.gal-btn.next{right:8px}
+
+.foot{background:var(--magenta);color:#fff;padding:80px 0 90px;text-align:center}
+.foot h2{font-size:44px;margin-bottom:18px}
+.foot a{color:#fff}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(20,16,18,.94);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lb.open{display:flex}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:4px}
+
+@media (max-width:860px){
+  body{font-size:17px}
+  .story.two{grid-template-columns:1fr}
+  .stories{grid-template-columns:repeat(2,1fr)}
+  .door{height:210vh}
+  /* on phones the door opens top / bottom */
+  .panel{width:100%;height:50%}
+  .panel.a{top:0;bottom:auto;transform:translateY(calc(var(--p,0) * -100%))}
+  .panel.b{top:auto;bottom:0;right:auto;left:0;transform:translateY(calc(var(--p,0) * 100%))}
+  .panel.a::before{top:auto;left:0;width:auto;height:2px}
+  .single .panel img{width:100%;height:200%;left:0}
+  .single .half-l img{top:0}
+  .single .half-r img{top:auto;bottom:0}
+  .cap{left:20px;bottom:18px}
+  .panel.b .cap{left:auto;right:20px;bottom:24px}
+  .figs.row{grid-template-columns:1fr}
+  .col h3{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .down{animation:none}
+}
+</style>
+</head>
+<body id="top">
+
+<header class="hero" data-n="1">
+  <img src="img/hall.jpg" alt="A person wearing a headset stands in a large hall. Four glowing bubbles float in front of them, each showing a place: books, bread at a door, a park, a river at sunset.">
+  <div class="hero-text">
+    <p class="kicker">A mixed reality artwork with Belfast City of Sanctuary</p>
+    <h1>Open to Stay</h1>
+    <p class="q">What makes a place feel like home?</p>
+  </div>
+  <a class="down" href="#about" aria-label="Read about the project">↓</a>
+</header>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <p class="lead">Open to Stay is an artwork made from conversations with people in Belfast.</p>
+    <p>Many of them came to Belfast from other countries. They talk about places in Belfast that remind them of home, and about what they miss.</p>
+    <p>In the artwork, you wear a headset. Doorways appear in the room around you. You push a door open, and you hear their stories.</p>
+    <p>On this page you can listen to the longer conversations. Every story has the words written below, so you can read along. Tap any line to hear it.</p>
+    <blockquote>
+      <p>“As human beings, we are always looking for safe spaces. Spaces we would call sanctuary. Spaces where people feel connected, feel welcome, feel safe.”</p>
+      <cite>Israel, Belfast City of Sanctuary</cite>
+    </blockquote>
+  </div>
+  <nav class="stories" aria-label="Stories">
+    <a href="#s1"><img src="img/logo-river.png" alt=""><span class="n">1</span><b>The River</b><span>Hassna</span></a>
+    <a href="#s2"><img src="img/logo-park.png" alt=""><span class="n">2</span><b>The Park</b><span>Tayo</span></a>
+    <a href="#s3"><img src="img/logo-home.png" alt=""><span class="n">3</span><b>Home</b><span>Kowther</span></a>
+    <a href="#s4"><img src="img/logo-library.png" alt=""><span class="n">4</span><b>The Library</b><span>Israel</span></a>
+  </nav>
+</section>
+<section class="door" id="s1" aria-label="Story 1: The River, Hassna">
+  <div class="sticky">
+    <div class="reveal">
+      <img class="bubble" src="img/logo-river.png" alt="">
+      <p class="num">Story 1</p>
+      <h2>The River</h2>
+      <p class="who">Hassna</p>
+    </div>
+    <div class="panel a" data-n="2"><video src="video/lagan.mp4" muted loop playsinline autoplay preload="metadata" poster="img/lagan-video-poster.jpg"></video><div class="cap"><span>Belfast</span><b>River Lagan</b></div></div><div class="panel b" data-n="3"><img src="img/gash1.jpg" alt=""><div class="cap"><span>Sudan</span><b>River Gash</b></div></div>
+    <div class="hint" aria-hidden="true">scroll to open</div>
+  </div>
+</section>
+<section class="story two" aria-label="Hassna's story">
+  <div class="col">
+    <h3><span>Belfast</span>River Lagan</h3>
+    <div class="player" data-key="1a" data-src="audio/1a-hassna-lagan.mp3">
+  <button class="play" type="button" aria-label="Play Hassna · River Lagan"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+  <div class="pl-main"><span class="pl-label">Hassna · River Lagan</span><div class="bar"><div class="fill"></div></div></div>
+  <span class="time">0:00</span>
+</div>
+    <div class="transcript" data-for="1a"><p class="tr-label">Read along</p><p data-t="0"><button class="ts" type="button" aria-label="Play from 0:00">0:00</button> <span>Every day, you see this. Every day, a new colour. Every day there is… look, how the colour… [?]</span></p>
+<p data-t="29.2"><button class="ts" type="button" aria-label="Play from 0:29">0:29</button> <span>It really makes my day. It really makes me happy. It makes me look forward to life from a different angle.</span></p>
+<p data-t="37.9"><button class="ts" type="button" aria-label="Play from 0:37">0:37</button> <span>You know, tomorrow is going to be better. Tomorrow is going to be something different.</span></p>
+<p data-t="43.1"><button class="ts" type="button" aria-label="Play from 0:43">0:43</button> <span>I&#x27;m living near the river, and my balcony is facing that place.</span></p>
+<p data-t="49.1"><button class="ts" type="button" aria-label="Play from 0:49">0:49</button> <span>Originally I&#x27;m from Sudan. I have been here in Belfast for the last ten years.</span></p>
+<p data-t="55.4"><button class="ts" type="button" aria-label="Play from 0:55">0:55</button> <span>I didn&#x27;t come when I was young. I came at this age. Emotionally, my heart and my mind are linked there.</span></p>
+<p data-t="64.4"><button class="ts" type="button" aria-label="Play from 1:04">1:04</button> <span>Whenever I&#x27;m trying to convince myself that I&#x27;m here… still, everything, everything is there.</span></p>
+<p data-t="76.7"><button class="ts" type="button" aria-label="Play from 1:16">1:16</button> <span>And whenever I&#x27;m on that balcony, it reminds me of my childhood, my family, my mum, my sister.</span></p>
+<p data-t="86.4"><button class="ts" type="button" aria-label="Play from 1:26">1:26</button> <span>I&#x27;ve been living in that place for almost one year now. But since I came, whenever I feel that I need to be with myself, I sit on that balcony facing the river.</span></p>
+<p data-t="100.0"><button class="ts" type="button" aria-label="Play from 1:40">1:40</button> <span>It gave me courage for life. My husband is [unclear], and it&#x27;s difficult. But on that balcony, there is hope.</span></p>
+<p data-t="107.6"><button class="ts" type="button" aria-label="Play from 1:47">1:47</button> <span>Every day is completely changed: the colour of the water, the lights, the reflection. It gives me courage that tomorrow will be better.</span></p>
+<p data-t="126.6"><button class="ts" type="button" aria-label="Play from 2:06">2:06</button> <span>And sometimes, whenever I lose the taste of life because my husband is suffering, I just sit there. I just look into the river.</span></p></div>
+    <div class="figs">
+      <figure class="ph " data-n="4"><img src="img/lagan.jpg" alt="The River Lagan, Belfast" loading="lazy"><figcaption>The River Lagan, Belfast</figcaption></figure>
+      <figure class="ph " data-n="5"><video src="video/lagan3.mp4" muted loop playsinline autoplay preload="metadata" poster="img/lagan3-video-poster.jpg"></video><figcaption>The Lagan at dusk</figcaption></figure>
+      <figure class="ph " data-n="6"><img src="img/lagan-mr.jpg" alt="In the artwork: the River Lagan doorway" loading="lazy"><figcaption>In the artwork: the River Lagan doorway</figcaption></figure>
+    </div>
+  </div>
+  <div class="col">
+    <h3><span>Sudan</span>River Gash</h3>
+    <div class="player" data-key="1b" data-src="audio/1b-hassna-gash.mp3">
+  <button class="play" type="button" aria-label="Play Hassna · River Gash"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+  <div class="pl-main"><span class="pl-label">Hassna · River Gash</span><div class="bar"><div class="fill"></div></div></div>
+  <span class="time">0:00</span>
+</div>
+    <div class="transcript" data-for="1b"><p class="tr-label">Read along</p><p data-t="0"><button class="ts" type="button" aria-label="Play from 0:00">0:00</button> <span>And I will show you something. This is a river, and this is a mountain. Look how beautiful it is.</span></p>
+<p data-t="7"><button class="ts" type="button" aria-label="Play from 0:07">0:07</button> <span>I used to live in the eastern part of Sudan, where there is something called Gash. It&#x27;s the Gash River.</span></p>
+<p data-t="15"><button class="ts" type="button" aria-label="Play from 0:15">0:15</button> <span>It is a seasonal one. It&#x27;s not always there, but in the rainy season it flows heavily, and sometimes it destroys things. But it means a lot to me.</span></p>
+<p data-t="30"><button class="ts" type="button" aria-label="Play from 0:30">0:30</button> <span>In the east we have mountains, and whenever we wanted to have a good time, we used to go there and sit nearby.</span></p>
+<p data-t="44"><button class="ts" type="button" aria-label="Play from 0:44">0:44</button> <span>When I was young, we used to go with my family early in the morning to watch the sunrise, you know? And later with my friends, when we were teenagers, the sunset.</span></p>
+<p data-t="59"><button class="ts" type="button" aria-label="Play from 0:59">0:59</button> <span>Last August, I went home. I went to see my family after the war. I went to that town, because my family are there now, after the war.</span></p>
+<p data-t="72"><button class="ts" type="button" aria-label="Play from 1:12">1:12</button> <span>As if God was sending me there to heal the injured part of me. Because being away from my family is not easy. I am so attached to my family.</span></p>
+<p data-t="87"><button class="ts" type="button" aria-label="Play from 1:27">1:27</button> <span>And with the struggle I&#x27;m facing here: the language, the culture barrier, many things.</span></p>
+<p data-t="96"><button class="ts" type="button" aria-label="Play from 1:36">1:36</button> <span>I was living on the Donegall Road, and then they moved us here.</span></p>
+<p data-t="101"><button class="ts" type="button" aria-label="Play from 1:41">1:41</button> <span>As if it is a message from God: there is something that makes you strong.</span></p></div>
+    <div class="figs">
+      <figure class="ph " data-n="7"><img src="img/gash2.jpg" alt="The River Gash in the rainy season" loading="lazy"><figcaption>The River Gash in the rainy season</figcaption></figure>
+      <figure class="ph " data-n="8"><img src="img/gash-mr.jpg" alt="In the artwork: the River Gash doorway" loading="lazy"><figcaption>In the artwork: the River Gash doorway</figcaption></figure>
+    </div>
+  </div>
+</section><section class="door" id="s2" aria-label="Story 2: The Park, Tayo">
+  <div class="sticky">
+    <div class="reveal">
+      <img class="bubble" src="img/logo-park.png" alt="">
+      <p class="num">Story 2</p>
+      <h2>The Park</h2>
+      <p class="who">Tayo</p>
+    </div>
+    <div class="panel a" data-n="9"><img src="img/ormeau.jpg" alt=""><div class="cap"><span>Belfast</span><b>Ormeau Park</b></div></div><div class="panel b" data-n="10"><img src="img/palm.jpg" alt=""><div class="cap"><span>Nigeria</span><b>The family farm</b></div></div>
+    <div class="hint" aria-hidden="true">scroll to open</div>
+  </div>
+</section>
+<section class="story two" aria-label="Tayo's story">
+  <div class="col">
+    <h3><span>Belfast</span>Ormeau Park</h3>
+    <div class="player" data-key="2a" data-src="audio/2a-tayo-ormeau.mp3">
+  <button class="play" type="button" aria-label="Play Tayo · Ormeau Park"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+  <div class="pl-main"><span class="pl-label">Tayo · Ormeau Park</span><div class="bar"><div class="fill"></div></div></div>
+  <span class="time">0:00</span>
+</div>
+    <div class="transcript" data-for="2a"><p class="tr-label">Read along</p><p data-t="0"><button class="ts" type="button" aria-label="Play from 0:00">0:00</button> <span>Well, if it&#x27;s a favourite place, it would be the park. There are many parks in Belfast, but most times I go through Ormeau Park, and I find it very relaxing.</span></p>
+<p data-t="14"><button class="ts" type="button" aria-label="Play from 0:14">0:14</button> <span>Just walking in the park. I&#x27;ve sat down there before, with others, during a picnic. It&#x27;s an environment I like because it&#x27;s natural.</span></p>
+<p data-t="29"><button class="ts" type="button" aria-label="Play from 0:29">0:29</button> <span>The birds coming, and their singing. People walking around with their dogs, all sorts of breeds. I like seeing those sights, and the beautiful trees as well.</span></p>
+<p data-t="42"><button class="ts" type="button" aria-label="Play from 0:42">0:42</button> <span>So it&#x27;s a very relaxing place for me in Belfast.</span></p></div>
+    <div class="figs">
+      <figure class="ph " data-n="11"><img src="img/park-mr.jpg" alt="In the artwork: the park doorway" loading="lazy"><figcaption>In the artwork: the park doorway</figcaption></figure>
+      <figure class="ph " data-n="12"><img src="img/park-mr2.jpg" alt="In the artwork: the tree of Ormeau Park" loading="lazy"><figcaption>In the artwork: the tree of Ormeau Park</figcaption></figure>
+    </div>
+  </div>
+  <div class="col">
+    <h3><span>Nigeria</span>The family farm</h3>
+    <div class="player" data-key="2b" data-src="audio/2b-tayo-nigeria.mp3">
+  <button class="play" type="button" aria-label="Play Tayo · The family farm"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+  <div class="pl-main"><span class="pl-label">Tayo · The family farm</span><div class="bar"><div class="fill"></div></div></div>
+  <span class="time">0:00</span>
+</div>
+    <div class="transcript" data-for="2b"><p class="tr-label">Read along</p><p data-t="0"><button class="ts" type="button" aria-label="Play from 0:00">0:00</button> <span>It reminds me of remote areas in my country, where I come from. That&#x27;s Nigeria.</span></p>
+<p data-t="6.2"><button class="ts" type="button" aria-label="Play from 0:06">0:06</button> <span>You know, when you go to the farm… I didn&#x27;t grow up there, I grew up in the city, but when I visit the farm sometimes…</span></p>
+<p data-t="19"><button class="ts" type="button" aria-label="Play from 0:19">0:19</button> <span>When I&#x27;m in Ormeau Park and I see the natural environment, it reminds me of home, like the farm at home.</span></p>
+<p data-t="27.5"><button class="ts" type="button" aria-label="Play from 0:27">0:27</button> <span>It&#x27;s my family farm. I&#x27;m not that rich, to have a farm! It&#x27;s the family land, where we grow some cash crops.</span></p>
+<p data-t="39.9"><button class="ts" type="button" aria-label="Play from 0:39">0:39</button> <span>It&#x27;s very far from where I live in the city, but we visit sometimes.</span></p>
+<p data-t="45.5"><button class="ts" type="button" aria-label="Play from 0:45">0:45</button> <span>You see palm trees, and cashew trees as well. I think there are bitter kola trees as well.</span></p>
+<p data-t="58.9"><button class="ts" type="button" aria-label="Play from 0:58">0:58</button> <span>All these trees are perennial. They give crops every year, so they are always there. You just need to weed them, so they give a better harvest every year.</span></p></div>
+    <div class="figs">
+      <figure class="ph " data-n="13"><img src="img/palm-plantation.jpg" alt="Palm trees on a farm" loading="lazy"><figcaption>Palm trees on a farm</figcaption></figure>
+    </div>
+  </div>
+</section><section class="door single" id="s3" aria-label="Story 3: Home, Kowther">
+  <div class="sticky">
+    <div class="reveal">
+      <img class="bubble" src="img/logo-home.png" alt="">
+      <p class="num">Story 3</p>
+      <h2>Home</h2>
+      <p class="who">Kowther</p>
+    </div>
+    <div class="panel a half-l" data-n="14"><img src="img/door.jpg" alt=""></div><div class="panel b half-r" data-n="14"><img src="img/door.jpg" alt=""></div>
+    <div class="hint" aria-hidden="true">scroll to open</div>
+  </div>
+</section>
+<section class="story one" aria-label="Kowther's story">
+  <div class="col">
+    <h3><span>Belfast</span>A safe place</h3>
+    <div class="player" data-key="3" data-src="audio/3-kowther-home.mp3">
+  <button class="play" type="button" aria-label="Play Kowther · Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+  <div class="pl-main"><span class="pl-label">Kowther · Home</span><div class="bar"><div class="fill"></div></div></div>
+  <span class="time">0:00</span>
+</div>
+    <div class="transcript" data-for="3"><p class="tr-label">Read along</p><p data-t="0"><button class="ts" type="button" aria-label="Play from 0:00">0:00</button> <span>The place I feel safe is my home. During the hard time, I didn&#x27;t feel safe outside, but my home became the safe place. I just close the curtains, switch off the light, and have a chat with my family.</span></p>
+<p data-t="20"><button class="ts" type="button" aria-label="Play from 0:20">0:20</button> <span>During that time, I hosted seventeen of our neighbours. They came to my house and stayed, because they were scared where they were.</span></p>
+<p data-t="31"><button class="ts" type="button" aria-label="Play from 0:31">0:31</button> <span>So at that moment, I felt my home is safe, not just for me, but for families, for the neighbours, for my community. A place to come and have a chat together.</span></p>
+<p data-t="41"><button class="ts" type="button" aria-label="Play from 0:41">0:41</button> <span>During the riots we stayed in the house for about one week. I wanted to get fresh air on the balcony, and my mum would say: no, you cannot go out on the balcony. They came and filled bottles with petrol, so they can make bombs.</span></p>
+<p data-t="59"><button class="ts" type="button" aria-label="Play from 0:59">0:59</button> <span>My mum would say: if you go out during the day, they will see you, and then at night they will come and smash the glass and burn our house.</span></p>
+<p data-t="68"><button class="ts" type="button" aria-label="Play from 1:08">1:08</button> <span>The first day was good, because we all came together and chatted. Everyone was on their phone, checking on their families in Sudan. They called: are you safe? We said: yes, we are here, we are safe, but we cannot go outside.</span></p>
+<p data-t="87"><button class="ts" type="button" aria-label="Play from 1:27">1:27</button> <span>The first day we had no problem with food. The milk, the bread, everything was good. By the end of the day we didn&#x27;t have anything. The kids need milk. There was no sugar. The bread was finished, because there were seventeen of us.</span></p>
+<p data-t="108"><button class="ts" type="button" aria-label="Play from 1:48">1:48</button> <span>Luckily, one of the organisations we work with, Belfast City of Sanctuary, came to my house. They brought food bags, milk, bread, all the essentials. I could go out and buy it, but because of the situation, I couldn&#x27;t.</span></p>
+<p data-t="123"><button class="ts" type="button" aria-label="Play from 2:03">2:03</button> <span>So I think no one should feel that way, scared to leave their house, because some people think you are not welcome here.</span></p>
+<p data-t="138"><button class="ts" type="button" aria-label="Play from 2:18">2:18</button> <span>It&#x27;s really scary, because even the police cannot stop them from doing what they are doing. We felt our life did not matter, at that time. That is what really scared me.</span></p>
+<p data-t="153"><button class="ts" type="button" aria-label="Play from 2:33">2:33</button> <span>They just see you as an immigrant, and they label you like that. Even if I don&#x27;t have any skills (everyone has a skill, but say I don&#x27;t have anything), I came to this country because it&#x27;s not safe back home. So it is my right to feel safe in this country. People should see you as just human.</span></p>
+<p data-t="175"><button class="ts" type="button" aria-label="Play from 2:55">2:55</button> <span>After the riots, I was scared about the 12th of July. I&#x27;m from a Muslim background. Last year, they put a boat on the bonfire, about immigrants, and set fire to it. This year, they put a mosque on top of the bonfire, and they burned it at the end. It&#x27;s an Islamophobic thing to do.</span></p>
+<p data-t="203"><button class="ts" type="button" aria-label="Play from 3:23">3:23</button> <span>It&#x27;s obvious you cannot do this, but some people are okay with this. And so I felt: no, I&#x27;m not really safe here, and I don&#x27;t belong. The only thing I&#x27;m expecting for next summer is for it to happen again.</span></p></div>
+    <div class="figs row">
+      <figure class="ph " data-n="15"><img src="img/home.jpg" alt="Curtains closed, at home" loading="lazy"><figcaption>Curtains closed, at home</figcaption></figure>
+      <figure class="ph " data-n="16"><img src="img/street-mr.jpg" alt="In the artwork: the street doorway" loading="lazy"><figcaption>In the artwork: the street doorway</figcaption></figure>
+    </div>
+  </div>
+</section><section class="door single" id="s4" aria-label="Story 4: The Library, Israel">
+  <div class="sticky">
+    <div class="reveal">
+      <img class="bubble" src="img/logo-library.png" alt="">
+      <p class="num">Story 4</p>
+      <h2>The Library</h2>
+      <p class="who">Israel</p>
+    </div>
+    <div class="panel a half-l" data-n="17"><img src="img/central.jpg" alt=""></div><div class="panel b half-r" data-n="17"><img src="img/central.jpg" alt=""></div>
+    <div class="hint" aria-hidden="true">scroll to open</div>
+  </div>
+</section>
+<section class="story one" aria-label="Israel's story">
+  <div class="col">
+    <h3><span>Northern Ireland</span>Libraries and new sanctuaries</h3>
+    <div class="player" data-key="4" data-src="audio/4-israel-library.mp3">
+  <button class="play" type="button" aria-label="Play Israel · The Library"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+  <div class="pl-main"><span class="pl-label">Israel · The Library</span><div class="bar"><div class="fill"></div></div></div>
+  <span class="time">0:00</span>
+</div>
+    <div class="gallery-wrap">
+      <button class="gal-btn prev" type="button" aria-label="Previous photo">←</button>
+      <div class="gallery">
+        <figure class="ph " data-n="18"><img src="img/central-inside.jpg" alt="Belfast Central Library, inside" loading="lazy"><figcaption>Belfast Central Library, inside</figcaption></figure>
+        <figure class="ph " data-n="19"><img src="img/library.jpg" alt="Between the shelves" loading="lazy"><figcaption>Between the shelves</figcaption></figure>
+        <figure class="ph " data-n="20"><img src="img/ormeau-lib.jpg" alt="Ormeau Library, a Library of Sanctuary" loading="lazy"><figcaption>Ormeau Library, a Library of Sanctuary</figcaption></figure>
+        <figure class="ph " data-n="21"><img src="img/ormeau-lib2.jpg" alt="Ormeau Library, Ormeau Road" loading="lazy"><figcaption>Ormeau Library, Ormeau Road</figcaption></figure>
+        <figure class="ph " data-n="22"><img src="img/ormeau-lib3.jpg" alt="Sculpture outside Ormeau Library" loading="lazy"><figcaption>Sculpture outside Ormeau Library</figcaption></figure>
+        <figure class="ph " data-n="23"><img src="img/library-mr.jpg" alt="In the artwork: the library doorway" loading="lazy"><figcaption>In the artwork: the library doorway</figcaption></figure>
+      </div>
+      <button class="gal-btn next" type="button" aria-label="Next photo">→</button>
+    </div>
+    <div class="transcript" data-for="4"><p class="tr-label">Read along</p><p data-t="0"><button class="ts" type="button" aria-label="Play from 0:00">0:00</button> <span>I&#x27;ve been in Belfast now for twenty years. That&#x27;s a very long time.</span></p>
+<p data-t="6"><button class="ts" type="button" aria-label="Play from 0:06">0:06</button> <span>When I first moved here, in 2009, I was very ill. I couldn&#x27;t go to work. But I couldn&#x27;t stay at home. I needed to go somewhere, and the library gave me that space.</span></p>
+<p data-t="22"><button class="ts" type="button" aria-label="Play from 0:22">0:22</button> <span>I would pick a book, read, and leave it there. Come back the next day, pick it up. I didn&#x27;t take books home, so I always had something to look forward to.</span></p>
+<p data-t="33"><button class="ts" type="button" aria-label="Play from 0:33">0:33</button> <span>So every day I had my plan for the week. Three days, I would go and read a book and leave it there, hoping nobody would take it. Sometimes I would hide it somewhere, so nobody takes it, so I can come back and continue.</span></p>
+<p data-t="45"><button class="ts" type="button" aria-label="Play from 0:45">0:45</button> <span>Because I wanted to come back. If I take it home, I won&#x27;t leave the house. And I wanted to leave the house, to go somewhere I felt safe.</span></p>
+<p data-t="57"><button class="ts" type="button" aria-label="Play from 0:57">0:57</button> <span>I joined Belfast City of Sanctuary in 2016. That was the first time I went to a meeting.</span></p>
+<p data-t="64"><button class="ts" type="button" aria-label="Play from 1:04">1:04</button> <span>One of the streams is Schools of Sanctuary, which I was very involved in. Today we have 111 Schools of Sanctuary, including kindergartens. That is the most amazing part of it.</span></p>
+<p data-t="81"><button class="ts" type="button" aria-label="Play from 1:21">1:21</button> <span>I went to some of those nursery schools, and the children were fantastic. They would hold hands and play together. They didn&#x27;t see any difference. And that is how a real world should look.</span></p>
+<p data-t="98"><button class="ts" type="button" aria-label="Play from 1:38">1:38</button> <span>Higher education is another stream: the colleges and the universities. When you see them open their doors, saying to the community: you can use our space. I think that is amazing.</span></p>
+<p data-t="117"><button class="ts" type="button" aria-label="Play from 1:57">1:57</button> <span>And another stream is Libraries of Sanctuary. In Northern Ireland we only have one: Ormeau Library, on the Ormeau Road.</span></p>
+<p data-t="130"><button class="ts" type="button" aria-label="Play from 2:10">2:10</button> <span>What that means is: how welcoming the library has been, being a part of the community. The library is part of the community. It&#x27;s not a resource from the outside. It&#x27;s a resource for the community, by the community and with the community.</span></p>
+<p data-t="152"><button class="ts" type="button" aria-label="Play from 2:32">2:32</button> <span>We are hoping that libraries in Northern Ireland will put other libraries forward.</span></p>
+<p data-t="161"><button class="ts" type="button" aria-label="Play from 2:41">2:41</button> <span>We have seen riots happen in 2024, 2025, and then 2026. And it&#x27;s going to happen next year. So that is where the &#x27;act&#x27; part comes from. We need to be proactive. It&#x27;s time for action. There is a call for action.</span></p>
+<p data-t="177"><button class="ts" type="button" aria-label="Play from 2:57">2:57</button> <span>We want to celebrate organisations that have been acting with us, alone or with other organisations. To be formally recognised, and to stand up and say: we are a welcoming organisation. A public declaration that we are a welcoming organisation. Our community is a welcoming community.</span></p></div>
+  </div>
+</section>
+<footer class="foot">
+  <div class="wrap">
+    <h2>Open to Stay</h2>
+    <p>Thank you to Hassna, Tayo, Kowther and Israel for sharing their stories.</p>
+    <p>An artwork by Katya Solomatina, made in partnership with <a href="https://belfast.cityofsanctuary.org/" target="_blank" rel="noopener">Belfast City of Sanctuary</a>.</p>
+    <p><a href="#top">Back to the top ↑</a></p>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-label="Photo"><img alt=""></div>
+<script>
+(function(){
+  if (/[?&]clean\b/.test(location.search)) document.body.classList.add('clean');
+
+  /* doors open with scroll */
+  var doors = [].slice.call(document.querySelectorAll('.door'));
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function onScroll(){
+    var vh = innerHeight;
+    doors.forEach(function(d){
+      var r = d.getBoundingClientRect();
+      var total = d.offsetHeight - vh;
+      var p = Math.min(1, Math.max(0, -r.top / (total * .8)));
+      if (reduce) p = r.top < vh * .5 ? 1 : 0;
+      p = 1 - Math.pow(1 - p, 2); // ease out
+      d.style.setProperty('--p', p.toFixed(4));
+    });
+  }
+  addEventListener('scroll', onScroll, {passive:true}); addEventListener('resize', onScroll); onScroll();
+
+  /* audio players with read-along transcripts */
+  var audio = new Audio(); audio.preload = 'none';
+  var current = null;
+  function fmt(s){ s = Math.floor(s||0); return Math.floor(s/60) + ':' + ('0'+s%60).slice(-2); }
+  var players = [].slice.call(document.querySelectorAll('.player'));
+  function lines(key){ var t = document.querySelector('.transcript[data-for="'+key+'"]'); return t ? [].slice.call(t.querySelectorAll('p[data-t]')) : []; }
+  function load(pl){
+    if (current === pl) return;
+    if (current){ current.classList.remove('playing'); current.querySelector('.time').textContent = fmt(0); current.querySelector('.fill').style.width = 0; lines(current.dataset.key).forEach(function(l){l.classList.remove('on')}); }
+    current = pl; audio.src = pl.dataset.src;
+  }
+  function play(pl, at){
+    load(pl);
+    var go = function(){ if (at != null) audio.currentTime = at; audio.play(); };
+    if (audio.readyState < 1 && at != null) audio.addEventListener('loadedmetadata', go, {once:true}), audio.load(); else go();
+  }
+  players.forEach(function(pl){
+    pl.querySelector('.play').addEventListener('click', function(){
+      if (current === pl && !audio.paused) audio.pause(); else play(pl);
+    });
+    pl.querySelector('.bar').addEventListener('click', function(e){
+      var r = this.getBoundingClientRect(), f = (e.clientX - r.left) / r.width;
+      if (current === pl && audio.duration) audio.currentTime = f * audio.duration;
+      else { load(pl); audio.addEventListener('loadedmetadata', function(){ audio.currentTime = f*audio.duration; audio.play(); }, {once:true}); audio.load(); }
+    });
+  });
+  document.querySelectorAll('.transcript p[data-t]').forEach(function(p){
+    p.querySelector('.ts').addEventListener('click', function(){
+      var key = p.parentNode.dataset.for;
+      play(document.querySelector('.player[data-key="'+key+'"]'), parseFloat(p.dataset.t));
+    });
+  });
+  audio.addEventListener('play', function(){ current && current.classList.add('playing'); });
+  audio.addEventListener('pause', function(){ current && current.classList.remove('playing'); });
+  audio.addEventListener('timeupdate', function(){
+    if (!current) return;
+    var t = audio.currentTime;
+    current.querySelector('.time').textContent = fmt(t);
+    if (audio.duration) current.querySelector('.fill').style.width = (t/audio.duration*100) + '%';
+    var ls = lines(current.dataset.key), on = null;
+    ls.forEach(function(l){ if (parseFloat(l.dataset.t) <= t + .2) on = l; });
+    ls.forEach(function(l){ l.classList.toggle('on', l === on); });
+  });
+
+  /* gallery arrows */
+  document.querySelectorAll('.gallery-wrap').forEach(function(w){
+    var g = w.querySelector('.gallery');
+    w.querySelector('.prev').addEventListener('click', function(){ g.scrollBy({left:-g.clientWidth*.8, behavior:'smooth'}); });
+    w.querySelector('.next').addEventListener('click', function(){ g.scrollBy({left: g.clientWidth*.8, behavior:'smooth'}); });
+  });
+
+  /* lightbox */
+  var lb = document.getElementById('lb'), lbi = lb.querySelector('img');
+  document.querySelectorAll('.ph img').forEach(function(i){
+    i.addEventListener('click', function(){ lbi.src = i.src; lbi.alt = i.alt; lb.classList.add('open'); });
+  });
+  lb.addEventListener('click', function(){ lb.classList.remove('open'); });
+  addEventListener('keydown', function(e){ if (e.key === 'Escape') lb.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>
