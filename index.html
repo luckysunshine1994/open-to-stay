@@ -140,6 +140,43 @@ figcaption{font-size:14px;color:var(--muted);margin-top:8px}
 .foot h2{font-size:44px;margin-bottom:18px}
 .foot a{color:#fff}
 
+
+/* SHARE + WALL */
+.share{padding:40px 24px 120px;background:var(--paper)}
+.share-in{max-width:980px;margin:0 auto}
+.share-lead{font-family:var(--serif);font-size:clamp(24px,3vw,32px);line-height:1.3;color:var(--magenta);margin:0 0 14px}
+.share-in>p{margin:0 0 14px;max-width:720px}
+.tags{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:30px}
+.tag{position:relative;display:flex;flex-direction:column;gap:6px;padding:26px 24px 20px;border-radius:14px;background:#c9a77c url(img/hearts-texture.jpg) center/cover;color:#3a2a1a;box-shadow:0 10px 24px rgba(80,50,20,.18)}
+.tag::before{content:"";position:absolute;top:12px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--paper);box-shadow:inset 0 1px 2px rgba(0,0,0,.4)}
+.tag-k{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-top:6px}
+.tag-q{font-family:var(--serif);font-size:21px;line-height:1.25}
+.tag-q i{font-style:normal;font-family:var(--sans);font-size:14px;opacity:.75}
+.tag textarea{font:400 17px/1.5 var(--sans);color:var(--ink);background:rgba(255,253,248,.93);border:1px solid rgba(80,50,20,.25);border-radius:8px;padding:10px 12px;resize:vertical;min-height:84px}
+.tag textarea:focus{outline:3px solid var(--teal);outline-offset:1px}
+.count{align-self:flex-end;font-size:13px;opacity:.8}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.send{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:22px}
+.send button{font:600 17px var(--sans);color:#fff;background:var(--magenta);border:0;border-radius:999px;padding:14px 28px;cursor:pointer;min-height:48px}
+.send button:hover{background:var(--magenta-d)}
+.send button:disabled{opacity:.6;cursor:wait}
+.status{margin:0;font-size:15px}
+.status.err{color:#b3261e}
+.note{font-size:14px;color:var(--muted);margin:12px 0 0}
+.wall-wrap{max-width:1180px;margin:70px auto 0}
+.wall-h{font-size:34px;margin:0 0 22px;text-align:center}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));gap:20px;align-items:start}
+.post{margin:0;padding:22px 20px 18px;border-radius:12px;background:#d8bd96;color:#3a2a1a;box-shadow:0 6px 16px rgba(80,50,20,.14);position:relative}
+.post:nth-child(3n+2){background:#cfb088;transform:rotate(.6deg)}
+.post:nth-child(3n){background:#e0c8a4;transform:rotate(-.6deg)}
+.post .k{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.75;margin-bottom:2px}
+.post p{margin:0;font-family:var(--serif);font-size:19px;line-height:1.35;overflow-wrap:anywhere}
+.post .b{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(58,42,26,.35)}
+.post.new{animation:pop .5s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(-10px) scale(.97)}}
+.wall-empty{text-align:center;color:var(--muted);grid-column:1/-1}
+@media (max-width:860px){.tags{grid-template-columns:1fr}}
+
 /* lightbox */
 .lb{position:fixed;inset:0;z-index:100;background:rgba(20,16,18,.94);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
 .lb.open{display:flex}
@@ -407,6 +444,49 @@ figcaption{font-size:14px;color:var(--muted);margin-top:8px}
 <p data-t="161"><button class="ts" type="button" aria-label="Play from 2:41">2:41</button> <span>We have seen riots happen in 2024, 2025, and then 2026. And it&#x27;s going to happen next year. So that is where the &#x27;act&#x27; part comes from. We need to be proactive. It&#x27;s time for action. There is a call for action.</span></p>
 <p data-t="177"><button class="ts" type="button" aria-label="Play from 2:57">2:57</button> <span>We want to celebrate organisations that have been acting with us, alone or with other organisations. To be formally recognised, and to stand up and say: we are a welcoming organisation. A public declaration that we are a welcoming organisation. Our community is a welcoming community.</span></p></div>
   </div>
+</section><section class="door single" id="s5" aria-label="Your turn: Your place, Is there a place where you feel at peace?">
+  <div class="sticky">
+    <div class="reveal">
+      <img class="bubble" src="img/logo-heart.png" alt="">
+      <p class="num">Your turn</p>
+      <h2>Your place</h2>
+      <p class="who">Is there a place where you feel at peace?</p>
+    </div>
+    <div class="panel a half-l" data-n="26"><img src="img/hearts.jpg" alt=""></div><div class="panel b half-r" data-n="26"><img src="img/hearts.jpg" alt=""></div>
+    <div class="hint" aria-hidden="true">scroll to open</div>
+  </div>
+</section>
+<section class="share" id="share" aria-label="Share your place">
+  <div class="share-in">
+    <p class="share-lead">Is there a place that is special to you, where you feel at peace? Write it on the left, and say why.</p>
+    <p>Have you lived in another country? Think about that feeling for a moment. Have you felt it before, in a place where you built a life? Write it on the right.</p>
+    <form id="wall-form" autocomplete="off">
+      <div class="tags">
+        <label class="tag">
+          <span class="tag-k">Here</span>
+          <span class="tag-q">My place of peace, and why</span>
+          <textarea name="here" rows="3" maxlength="140" required placeholder="The bench by the river at sunset, because it is quiet"></textarea>
+          <span class="count">0 / 140</span>
+        </label>
+        <label class="tag">
+          <span class="tag-k">Before</span>
+          <span class="tag-q">The same feeling, in another country <i>(if you have one)</i></span>
+          <textarea name="before" rows="3" maxlength="140" placeholder="My grandmother's garden, early in the morning"></textarea>
+          <span class="count">0 / 140</span>
+        </label>
+      </div>
+      <input class="hp" type="text" name="website" tabindex="-1" aria-hidden="true">
+      <div class="send">
+        <button type="submit">Add to the wall</button>
+        <p class="status" role="status"></p>
+      </div>
+      <p class="note">Your words appear on the wall straight away, without your name. Please don't share anything private.</p>
+    </form>
+  </div>
+  <div class="wall-wrap">
+    <h3 class="wall-h">The wall</h3>
+    <div id="wall" class="wall"><p class="wall-empty">Loading…</p></div>
+  </div>
 </section>
 <footer class="foot">
   <div class="wrap">
@@ -488,6 +568,58 @@ figcaption{font-size:14px;color:var(--muted);margin-top:8px}
     w.querySelector('.prev').addEventListener('click', function(){ g.scrollBy({left:-g.clientWidth*.8, behavior:'smooth'}); });
     w.querySelector('.next').addEventListener('click', function(){ g.scrollBy({left: g.clientWidth*.8, behavior:'smooth'}); });
   });
+
+  /* wall of places */
+  var WALL_URL = '';
+  var wall = document.getElementById('wall'), form = document.getElementById('wall-form');
+  if (wall && form){
+    var status = form.querySelector('.status'), btn = form.querySelector('button');
+    var post = function(p, isNew){
+      var d = document.createElement('div'); d.className = 'post' + (isNew ? ' new' : '');
+      var k = document.createElement('span'); k.className = 'k'; k.textContent = 'Here';
+      var a = document.createElement('p'); a.textContent = p.here;
+      d.appendChild(k); d.appendChild(a);
+      if (p.before){
+        var b = document.createElement('div'); b.className = 'b';
+        var k2 = document.createElement('span'); k2.className = 'k'; k2.textContent = 'Before';
+        var c = document.createElement('p'); c.textContent = p.before;
+        b.appendChild(k2); b.appendChild(c); d.appendChild(b);
+      }
+      return d;
+    };
+    var empty = function(msg){ wall.innerHTML = ''; var e = document.createElement('p'); e.className = 'wall-empty'; e.textContent = msg; wall.appendChild(e); };
+    var load = function(){
+      if (WALL_URL.indexOf('http') !== 0){ empty('The wall opens soon.'); return; }
+      fetch(WALL_URL).then(function(r){ return r.json(); }).then(function(j){
+        wall.innerHTML = '';
+        if (!j.posts || !j.posts.length){ empty('Be the first to add a place.'); return; }
+        j.posts.forEach(function(p){ wall.appendChild(post(p)); });
+      }).catch(function(){ empty('The wall could not load just now. Please try again later.'); });
+    };
+    form.querySelectorAll('textarea').forEach(function(t){
+      var c = t.parentNode.querySelector('.count');
+      t.addEventListener('input', function(){ c.textContent = t.value.length + ' / 140'; });
+    });
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var data = { here: form.here.value.trim(), before: form.before.value.trim(), website: form.website.value };
+      if (!data.here){ status.className = 'status err'; status.textContent = 'Please write your place on the left.'; return; }
+      if (WALL_URL.indexOf('http') !== 0){ status.className = 'status err'; status.textContent = 'The wall is not open yet.'; return; }
+      btn.disabled = true; status.className = 'status'; status.textContent = 'Sending…';
+      fetch(WALL_URL, { method:'POST', body: JSON.stringify(data) })
+        .then(function(r){ return r.json(); })
+        .then(function(j){
+          if (!j.ok) throw new Error(j.error || 'Something went wrong.');
+          var w = wall.querySelector('.wall-empty'); if (w) wall.innerHTML = '';
+          wall.insertBefore(post(data, true), wall.firstChild);
+          form.reset(); form.querySelectorAll('.count').forEach(function(c){ c.textContent = '0 / 140'; });
+          status.textContent = 'Thank you. Your place is on the wall.';
+        })
+        .catch(function(err){ status.className = 'status err'; status.textContent = (err && !(err instanceof TypeError) && err.message) ? err.message : 'Something went wrong. Please try again.'; })
+        .then(function(){ btn.disabled = false; });
+    });
+    load();
+  }
 
   /* lightbox */
   var lb = document.getElementById('lb'), lbi = lb.querySelector('img');
