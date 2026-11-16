@@ -50,6 +50,10 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.15;margin:0}
 blockquote{margin:44px 0 0;padding:28px 30px;background:#fff;border-left:5px solid var(--teal);border-radius:4px}
 blockquote p{font-family:var(--serif);font-size:22px;line-height:1.45;margin:0 0 12px!important}
 cite{font-style:normal;font-size:15px;color:var(--muted)}
+.pillars{margin:48px 0 40px;text-align:center}
+.pw{font-family:var(--serif);font-size:clamp(28px,7.6vw,58px);line-height:1.1;color:var(--magenta);margin:0 0 14px!important}
+.pw span:nth-child(2){color:var(--teal)}.pw span:nth-child(4){color:var(--teal)}
+.pq{font-size:17px;color:var(--muted);max-width:560px;margin:0 auto!important}
 .stories{max-width:1040px;margin:72px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .stories a{display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:var(--ink);padding:10px 6px 18px;border-radius:12px;transition:transform .3s,background .3s}
 .stories a:hover{background:#fff;transform:translateY(-4px)}
@@ -163,21 +167,25 @@ figcaption{font-size:14px;color:var(--muted);margin-top:8px}
   <div class="hero-text">
     <p class="kicker">A mixed reality artwork with Belfast City of Sanctuary</p>
     <h1>Open to Stay</h1>
-    <p class="q">What makes a place feel like home?</p>
+    <p class="q">Where do you feel at home, and what keeps that place alive?</p>
   </div>
   <a class="down" href="#about" aria-label="Read about the project">↓</a>
 </header>
 
 <section class="about" id="about">
   <div class="wrap">
-    <p class="lead">Open to Stay is an artwork made from conversations with people in Belfast.</p>
-    <p>Many of them came to Belfast from other countries. They talk about places in Belfast that remind them of home, and about what they miss.</p>
-    <p>In the artwork, you wear a headset. Doorways appear in the room around you. You push a door open, and you hear their stories.</p>
-    <p>On this page you can listen to the longer conversations. Every story has the words written below, so you can read along. Tap any line to hear it.</p>
+    <p class="lead">Open to Stay is an interactive mixed reality artwork about places of sanctuary. It is made from conversations with people in Belfast who have built a life in more than one country.</p>
+    <p>When you start again somewhere new, you slowly find small anchor points: a river, a park, a library, your own front door. Places of rest and calm. Sometimes one of these places becomes a doorway to another place, far away, where you once built a life before. What do these places mean to us? How fragile are they? And what can each of us do to protect them, and make more of them?</p>
     <blockquote>
       <p>“As human beings, we are always looking for safe spaces. Spaces we would call sanctuary. Spaces where people feel connected, feel welcome, feel safe.”</p>
       <cite>Israel, Belfast City of Sanctuary</cite>
     </blockquote>
+    <div class="pillars">
+      <p class="pw"><span>Learn.</span> <span>Share.</span> <span>Embed.</span> <span>Act.</span></p>
+      <p class="pq">“What do you learn? You share what you learn, you embed what you have learned, and then you act on it.”</p>
+    </div>
+    <p>Open to Stay is a mixed reality documentary art piece, designed to be experienced in person, with a headset, in any space: an art venue, a community centre, a classroom or a gazebo in the park. Portals appear around you. Step inside someone’s story and take part in building a sanctuary.</p>
+    <p>On this page you can listen to the full conversations and read the words of each interview. Tap any line to hear it.</p>
   </div>
   <nav class="stories" aria-label="Stories">
     <a href="#s1"><img src="img/logo-river.png" alt=""><span class="n">1</span><b>The River</b><span>Hassna</span></a>
