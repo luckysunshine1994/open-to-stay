@@ -1,9 +1,6 @@
-/**
- * @OnlyCurrentDoc
- */
 // Open to Stay — "Wall of places" backend.
-// Bound to the Google Sheet "Open to Stay - Wall of places" (Extensions > Apps Script).
-// @OnlyCurrentDoc above means this script can only ever open THIS one spreadsheet.
+// Apps Script project "Open to Stay wall" in the separate account opentostay.belfast@gmail.com.
+// It reads and writes only the Sheet "Open to Stay - Wall of places" in that account.
 // To remove a post: delete its row in the sheet, or type x in the Hide column.
 
 var MAX_CHARS = 140;           // per box (about 20 words)
@@ -11,7 +8,7 @@ var MAX_POSTS_PER_10_MIN = 30; // simple flood protection for the whole wall
 var BLOCKED = ['nigger','nigga','paki','fuck','cunt','go home','send them back','invaders','kill','rape']; // edit freely
 
 function sheet_() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SpreadsheetApp.openById('1wap7HAgH_3vB9r-J-Yc0qLPfIM9q_A5wcbAOLuarkWY');
   return ss.getSheetByName('Wall') || ss.getSheets()[0];
 }
 
