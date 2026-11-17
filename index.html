@@ -604,7 +604,14 @@ figcaption{font-size:14px;color:var(--muted);margin-top:8px}
       return d;
     };
     var empty = function(msg){ wall.innerHTML = ''; var e = document.createElement('p'); e.className = 'wall-empty'; e.textContent = msg; wall.appendChild(e); };
+    var PUBLIC = 'https://luckysunshine1994.github.io/open-to-stay/#share';
+    var offsite = !/github\.io$|^localhost$|^127\./.test(location.hostname);
+    if (offsite){
+      wall.innerHTML = '<p class="wall-empty">The wall works on the public website: <a href="' + PUBLIC + '" target="_blank" rel="noopener">luckysunshine1994.github.io/open-to-stay</a></p>';
+      form.addEventListener('submit', function(e){ e.preventDefault(); e.stopImmediatePropagation(); status.className = 'status err'; status.innerHTML = 'Please use the public website to add your place: <a href="' + PUBLIC + '" target="_blank" rel="noopener">open it here</a>.'; }, true);
+    }
     var load = function(){
+      if (offsite) return;
       if (WALL_URL.indexOf('http') !== 0){ empty('The wall opens soon.'); return; }
       fetch(WALL_URL).then(function(r){ return r.json(); }).then(function(j){
         wall.innerHTML = '';
